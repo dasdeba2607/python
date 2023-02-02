@@ -1,76 +1,107 @@
 import os
 import sys
-
+DELIMETER = ","
 def GetInputFromStudent():
-    global lname, lage, lemail, lcourseid
     lname = input("please enter name, then enter")
     lage = input("please enter age, then enter")
     lemail = input("please enter email, then enter")
     lcourseid = input("please enter couse id, then enter")
-
-
-def StoreStudentData():
-    global student_list
-    # print(lname,lage,lemail,lcourseid)
-    student_list = []
-    D = {'name': lname, 'age': lage, 'email': lemail, 'course': lcourseid}
-    # D = dict(lname={'age':lage,'email':lemail,'curse':lcourseid})
-    student_list.append(D)
+    lstatus = input("please enter Admission status [A/D] :, then enter")
+    return StudentMaster(lname, lage, lemail, lcourseid, lstatus)
 
 class StudentMaster:
-    def __init__(self, lname, lage, lemail, lcourse):
+    def __init__(self, lname, lage, lemail, lcourse, lstatus):
         self.name = lname
         self.age = lage
         self.email = lemail
         self.course = lcourse
+        self.status = lstatus
 
-def StoreStudentDataIntoDict():
-    global student_dict
-    student_dict = {}
-    studentMaster1 = StudentMaster(lname,lage,lemail,lcourseid)
-    student_dict[lname]=studentMaster1
-    #print(student_dict[lname].name)
-
-
-def PrintData():
-    for x in student_list:
-        print("name is ", student_list[0]['name'])
-        print("age is ", student_list[0]['age'])
-        print("email is ", student_list[0]['email'])
-        print("course is ", student_list[0]['course'])
-
-def StoreDataToFile():
-    global final_dict
-    final_dict= {}
-    os.chdir("C:/deba/deba5/training/python/pythonTrainingProject")
-    mycurdir = os.getcwd()
-    if mycurdir != "C:\deba\deba5\\training\python\pythonTrainingProject":
-        print("not a correct directory, doing nothing")
+def CreateDataFile():
+    if os.path.isfile("C:\deba\deba5\\training\python\github\python\das.txt"):
+        return open("das.txt", "r+")
     else:
-        print("correct directory, doing nothing")
-    try:
-        print(student_dict.keys())
-        fo = open("das.txt", "w+")
-        # print(type(fo))
-        # print(fo.mode)
-        for r in student_dict.keys():
-            #final_dict[r]={"age":str(student_dict[r].name,"email":str(student_dict[r].email,"course":str(student_dict[r].course}
-            myvar = "{ \"" + r + "\" : { \"age\" : \"" + student_dict[r].age + "\", \"email\" : \"" + student_dict[r].email + "\", \"course\" : \"" + student_dict[r].course + "\" }}"
-            print(myvar)
-            fo.write(myvar)
-        fo.close()
-    except FileNotFoundError as e:
-        print("unable to open file ", sys.exc_info()[0], sys.exc_info()[1])
-    except PermissionError as e:
-        print("permission error", sys.exc_info()[0], sys.exc_info()[1])
-    except IsADirectoryError:
-        print("Error related to directory", sys.exc_info()[0], sys.exc_info()[1])
+        return open("das.txt", "w+")
 
+def OpenMenuFile(mode):
+    return open("menu.txt", mode)
+
+def StoreData(file, data):
+    record=data.name + DELIMETER + data.age + DELIMETER + data.email + DELIMETER + data.course + DELIMETER + data.status
+    #file.writelines(record)
+    if file.mode=="r+":
+        file.seek(0,2)
+        file.write("\n")
+        file.write(record)
+    elif file.mode=="w+":
+        file.writelines(record)
+    file.close()
+
+def StoreMenu(file):
+    record="Admission\n" + "Adm Report\n" + "Enquiry by email id\n" + "Exit"
+    file.writelines(record)
+    file.close()
+
+def ReadFile(file):
+    record_list = []
+    for line in file:
+        record_list.append(line.strip())
+    print(record_list)
+    return record_list
+
+
+def PrintRecord(record_list):
+    count=0
+    for r in record_list:
+        print("{}. {}".format(count+1,record_list[count]))
+        count +=1
+
+def DisplayData(file):
+    count = 0
+    for line in file:
+        count += 1
+        print("Record{}: {}".format(count, line.strip()))
+    file.close()
+
+def SearchData(file,attr,criteria):
+    count = 0
+    lines = file.readlines()
+    if attr == "name":
+        count = 0
+        for row in lines:
+            count += 1
+            if repr(row).startswith(criteria,1):
+                print("Record no {} : {}".format(count,row))
+    file.close()
+
+
+def DisplayMenu():
+    menufile = OpenMenuFile("r")
+    record_list = ReadFile(menufile)
+    PrintRecord(record_list)
+    choice = input("Enter choice :")
+    menufile.close()
+    return choice
 
 
 if __name__ == '__main__':
-    GetInputFromStudent()
-    #StoreStudentData()
-    StoreStudentDataIntoDict()
-    #PrintData()
-    StoreDataToFile()
+    file = OpenMenuFile("w+")
+    StoreMenu(file)
+    choice=DisplayMenu()
+    while True:
+        if choice == "1":
+            file = CreateDataFile()
+            studentdata = GetInputFromStudent()
+            StoreData(file, studentdata)
+        elif choice == "2":
+            print("Displaying data")
+            file = CreateDataFile()
+            DisplayData(file)
+        elif choice == "3":
+            print("Please enter search string for name")
+            criteria=input("enter string : ")
+            file = CreateDataFile()
+            SearchData(file,"name",criteria)
+        elif choice == "4":
+            sys.exit(0)
+        choice=DisplayMenu()
