@@ -1,0 +1,4 @@
+Admission
+Adm Report
+Enquiry by email id
+Exit
