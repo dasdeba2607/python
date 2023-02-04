@@ -1,0 +1,7 @@
+a,1,a@a.com,maths,A
+b,2,b@b.com,Eco,A
+c,3,c@c.com,Bio,A
+d,4,d@d.com,Eng,A
+e,5,e@e.com,Beng,A
+f,6,f@f.com,Hindi,A
+g,7,g@g.com,Marathi,A
