@@ -1,6 +1,7 @@
 import sqlite3
 import traceback, sys
 
+# https://www.tutorialspoint.com/sqlite/sqlite_python.htm
 # the following line creates a db file of sqllite and then connects
 conn = sqlite3.connect('test.db')
 cur =  conn.cursor()
