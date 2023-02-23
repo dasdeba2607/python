@@ -2,6 +2,7 @@ fileName = "menu.txt"
 
 
 class Menu:
+    choice = ""
 
     @staticmethod
     def insert():
@@ -20,6 +21,5 @@ class Menu:
         for r in record_list:
             print("{}. {}".format(count + 1, record_list[count]))
             count += 1
-        choice = input("Enter choice :")
+        Menu.choice = input("Enter choice :")
         file.close()
-        return choice
