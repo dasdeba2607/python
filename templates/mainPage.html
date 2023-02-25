@@ -1,0 +1,18 @@
+<html>
+<head>
+  <title>Menu Page</title>
+  <meta charset="UTF-8" />
+  <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles.css') }}">
+</head>
+   <body>
+      <form action = "http://localhost:5000/menuChoice" method = "post">
+         <h1>1. Admission</h1>
+         <h1>2. Report</h1>
+         <h1>3. Search</h1>
+         <h1>4. Exit</h1>
+         <p>Enter Choice:</p>
+         <p><input type = "text" name = "nm" /></p>
+         <p><input type = "submit" value = "submit" /></p>
+      </form>
+   </body>
+</html>
