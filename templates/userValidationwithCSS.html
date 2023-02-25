@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Welcome Page</title>
+  <meta charset="UTF-8" />
+  <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles.css') }}">
+  <meta http-equiv="refresh" content="5; URL=http://127.0.0.1:5000/" />
+</head>
+<body>
+{% if user == "admin" %}
+   <h1>Welcome Super user {{user}}</h1>
+{% else %}
+   <h1>Welcome user {{user}}</h1>
+{% endif %}
+</body>
+</html>
