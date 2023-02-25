@@ -1,0 +1,26 @@
+link : https://www.geeksforgeeks.org/creating-python-virtual-environment-windows-linux/ 
+#upgrade ubuntu
+sudo apt update
+sudo apt upgrade
+
+# install this
+sudo apt install software-properties-common
+
+#creating virtual env , python3 was installed already
+mkdir deba_python
+cd deba_python
+apt install python3-pip
+type python3
+type pip
+type pip3
+pip3 install virtualenv
+virtualenv -p /usr/bin/python3 flask
+source flask/bin/activate
+under flask venv
+   pip3 install flask
+   pip3 install --upgrade pip
+   pip3 install flask
+   pip3 install oci
+   pip3 install uwsgi
+   deactivate
+root@LAPTOP-IHE2SDVS:~/deba_python#
