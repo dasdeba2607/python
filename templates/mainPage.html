@@ -5,6 +5,13 @@
   <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles.css') }}">
 </head>
    <body>
+      {% with messages = get_flashed_messages() %}
+         {% if messages %}
+            {% for message in messages %}
+              {{ message }}
+            {% endfor %}
+         {% endif %}
+      {% endwith %}
       <form action = "http://localhost:5000/menuChoice" method = "post">
          <h1>1. Admission</h1>
          <h1>2. Report</h1>
